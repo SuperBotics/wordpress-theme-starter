@@ -44,19 +44,21 @@ gulp.task('scripts', function () {
  *minified all css files
  */
 gulp.task('css', function () {
-    var main = gulp.src(['./themes/build-it/assets/css/main.css'])
+    var main = gulp.src(['./themes/build-it/assets/css/main.scss'])
+        .pipe(sass())
+        .pipe(autoprefixer("last 3 version", "safari 5", "ie 8", "ie 9"))
+        .pipe(gulp.dest('./themes/build-it/assets/css'))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(minifyCSS())
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(concat('main.min.css'))
         .pipe(gulp.dest('./themes/build-it/assets/css'))
         .pipe(notify({ message: 'Scripts task complete' }));
 
-
-
-    var main = gulp.src(['./themes/build-it/assets/css/vendor.css'])
+    var vendor = gulp.src(['./themes/build-it/assets/css/vendor.scss'])
+        .pipe(sass())
+        .pipe(autoprefixer("last 3 version", "safari 5", "ie 8", "ie 9"))
+        .pipe(gulp.dest('./themes/build-it/assets/css'))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(minifyCSS())
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(concat('vendor.min.css'))
         .pipe(gulp.dest('./themes/build-it/assets/css'))
         .pipe(notify({ message: 'Scripts task complete' }));
 });
